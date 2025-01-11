@@ -1,0 +1,8 @@
+swig
+gymnasium[box2d]
+pyvirtualdisplay
+huggingface-hub
+huggingface-sb3
+stable-baselines3
+opencv-python
+debugpy
