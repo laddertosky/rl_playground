@@ -26,7 +26,7 @@ def train_or_load():
         ent_coef = 0.01,
         verbose=1)
 
-    model.learn(total_timesteps=1_000_000)
+    model.learn(total_timesteps=3_000_000, progress_bar=True)
 
     # Save the model
     model.save(MODEL_NAME)
@@ -36,7 +36,8 @@ def eval(model):
     eval_env = Monitor(gym.make(ENVIRONMENT, render_mode='human'))
     mean_reward, std_reward = evaluate_policy(model, eval_env, n_eval_episodes=10, deterministic=True, render=True)
 
-    # mean_reward=258.10 +/- 15.16840138874867
+    # mean_reward=258.10 +/- 15.16840138874867, with total_timesteps=1_000_000
+    # mean_reward=291.98 +/- 18.98757151952521, with total_timesteps=3_000_000
     print(f"mean_reward={mean_reward:.2f} +/- {std_reward}")
 
 if __name__ == "__main__":

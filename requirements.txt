@@ -4,5 +4,6 @@ pyvirtualdisplay
 huggingface-hub
 huggingface-sb3
 stable-baselines3
+stable-baselines3[extra]
 opencv-python
 debugpy
