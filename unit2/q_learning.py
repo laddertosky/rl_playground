@@ -1,9 +1,7 @@
 import random
 
 import gymnasium as gym
-import imageio
 import numpy as np
-import pickle5 as pickle
 from gymnasium.spaces import Discrete
 from tqdm import tqdm
 
@@ -29,8 +27,8 @@ class Hyperparameters:
 
 class LakeHP(Hyperparameters):
     n_training_episodes = 100000
-    learning_rate = 0.005  
-    decay_rate = 0.00005  
+    learning_rate = 0.05
+    decay_rate = 0.0005  
 
 class TaxiHP(Hyperparameters):
     n_training_episodes = 50000
@@ -199,10 +197,25 @@ def eval(env: gym.Env, q_table, params: Hyperparameters = Hyperparameters()):
     std_reward = np.std(rewards)
     return mean_reward, std_reward
 
+def packing_model(q_table, params: Hyperparameters, env_id):
+    return {
+        "env_id": env_id,
+        "max_steps": params.max_steps,
+        "n_training_episodes": params.n_training_episodes,
+        "n_eval_episodes": params.n_eval_episodes,
+        "eval_seed": params.eval_seed,
+        "learning_rate": params.learning_rate,
+        "gamma": params.gamma,
+        "max_epsilon": params.max_epsilon,
+        "min_epsilon": params.min_epsilon,
+        "decay_rate": params.decay_rate,
+        "qtable": q_table,
+    }
+
 def fronzen_lake():
     map = "4x4"
     env_id = "FrozenLake-v1"
-    env = gym.make(env_id, render_mode=None, map_name=map, is_slippery=True)
+    env = gym.make(env_id, render_mode="rgb_array", map_name=map, is_slippery=True)
 
     params = LakeHP()
     q_table = train(env, params)
@@ -214,12 +227,13 @@ def fronzen_lake():
     # env.render()
 
     '''
-        Env: FrozenLake-v1: mean_reward = 0.81 +- std_reward = 0.3923009049186606, (lower = 0.41769909508133946)
+        Env: FrozenLake-v1: mean_reward = 0.75 +- std_reward = 0.4330127018922193, (lower = 0.3169872981077807)
     '''
+    return packing_model(q_table, params, env_id), env
 
 def taxi():
     env_id = "Taxi-v3"
-    env = gym.make(env_id, render_mode=None)
+    env = gym.make(env_id, render_mode="rgb_array")
 
     params = TaxiHP()
     q_table = train(env, params)
@@ -233,6 +247,7 @@ def taxi():
     '''
         Env: Taxi-v3: mean_reward = 7.56 +- std_reward = 2.706732347314747, (lower = 4.853267652685252)
     '''
+    return packing_model(q_table, params, env_id), env
 
 if __name__ == "__main__":
     fronzen_lake()
