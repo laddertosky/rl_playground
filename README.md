@@ -37,4 +37,7 @@ pip3 install -e ./ml-agents-envs
 pip3 install -e ./ml-agents
 ```
 
-
+## Unit 2
+```sh
+pip install -r https://raw.githubusercontent.com/huggingface/deep-rl-class/main/notebooks/unit2/requirements-unit2.txt
+```
