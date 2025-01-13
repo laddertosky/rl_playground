@@ -41,3 +41,8 @@ pip3 install -e ./ml-agents
 ```sh
 pip install -r https://raw.githubusercontent.com/huggingface/deep-rl-class/main/notebooks/unit2/requirements-unit2.txt
 ```
+
+## Unit 3
+```sh
+pip install git+https://github.com/DLR-RM/rl-baselines3-zoo
+```

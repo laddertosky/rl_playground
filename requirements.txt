@@ -1,5 +1,8 @@
 swig
 gymnasium[box2d]
+gymnasium[atari]
+gymnasium[accept-rom-license]
+gymnasium[other]
 pyvirtualdisplay
 huggingface-hub
 huggingface-sb3
